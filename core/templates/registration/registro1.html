@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+
+{% block contenido %}
+
+{% load crispy_forms_tags %}
+<body style="background-color: #CCAEC8;">
+    <div class="container">
+        <br>
+        <br>
+        <form action="" method="post">
+    
+            <section class="vh-1000 mb-4" style=" margin-top: 30px;">
+                <div class="container h-100">
+                  <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-12 col-xl-11">
+                      <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                          <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+              
+                              <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registrate con NOSOTROS</p>
+              
+                              <form class="mx-1 mx-md-4">
+        
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                <a href="{% url 'index' %}">Inicio</a> | 
+                                <a href="{% url 'login' %}">Iniciar Sesión</a>
+                                &nbsp;
+                                <div class="justify-content-md-end">
+                                    <input type="submit" value="Registrar" class="btn btn-primary">
+                                </div>
+              
+                              </form>
+              
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+              
+                              <img src="{% static 'core/img/perro3.jpg' %}" class="img-fluid" alt="Sample image">
+              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            
+        </form>
+    </div>
+</body>
+
+
+{% endblock %}

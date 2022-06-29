@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<body style="background-image: url('https://c.wallhere.com/photos/98/f6/landscape_beach_dog_sunset_shore_water_animals-1488737.jpg!d') ;">
+  <!-- Inicio formulario-->
+  <div class="container-fluid mb-5" id="tercer-contenedor">
+    <div class="row pt-5" id="contenedor-titulo">
+        <div class="col-2"></div>
+        <div class="col-4" id="fondo-titulo">
+            <h2 id="titulo">Formulario de contacto</h2>
+            <div class="barra-inferior"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 pt-5">
+          <!-- FORMULARIO -->
+            <form action="" class="filter row g-3" id="formulario" method="post">
+
+                {% csrf_token %}
+              
+                {{ form | crispy}}
+
+                <!-- Grupo Botón-->
+                <div class="formulario__grupo col-12">
+                  <input type="reset" value="Cancelar" class="btn btn-secondary">
+                  <button type="submit" onclick="validar()" class="formulario__btn btn btn-none" style="background-color: rgb(118, 11, 136); color: aliceblue;">Enviar</button>
+                  <p></p>
+                </div>
+              </form>
+              {{mensaje}}
+        </div>
+    </div>
+</div>
+
+  </div>
+  <!--Fin formulario-->
+</body>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  <!-- script api de regiones de chile -->
+  <script>
+    $.get("https://apis.digital.gob.cl/dpa/regiones", function (data) {
+        $.each(data, function (i, data) {
+            $("#regiones").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
+        });
+    });
+
+    $("#regiones").change(function () {
+        $()
+        $("#provincia").empty();
+        $.get("https://apis.digital.gob.cl/dpa/regiones/" + $("#regiones").val() + "/provincias", function (data) {
+            $.each(data, function (i, data) {
+                $("#provincia").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
+            });
+        });
+    });
+
+    $("#provincia").change(function () {
+        $("#comunas").empty();
+        $.get("https://apis.digital.gob.cl/dpa/provincias/" + $("#provincia").val() + "/comunas", function (data) {
+            $.each(data, function (i, data) {
+                $("#comunas").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
+            });
+        });
+    });
+</script>
+<!-- fin script api regiones de chile -->
+
+{% endblock %}

@@ -1,0 +1,4 @@
+django == 4.0.4
+pillow
+django-crispy-forms
+django-rest-framework

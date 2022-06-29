@@ -1,0 +1,24 @@
+*{
+    padding: 0;
+    margin: 0;
+    
+}
+
+#contenedor-form{
+    padding: 4.5rem ;
+}
+
+#tercer-contenedor #contenedor-titulo #titulo{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffff;
+    border-color: black;
+}
+
+
+#formulario{
+    background-color: rgb(156, 156, 156);
+    border-radius: 1%;
+}

@@ -1,0 +1,46 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#primer-contenedor{
+    height: 150px;
+    width: 100%;
+    background-color: #50a1e3;
+}
+
+#primer-contenedor #contenedor-logo a{
+    text-decoration: none;
+    color: white;
+    font-size: 3rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+     Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 
+     'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    transition: all 0.5s;
+}
+
+#primer-contenedor #contenedor-logo a:hover{
+    color:blueviolet;
+}
+
+#titulo-admin{
+    color: white;
+}
+
+#cerrar-sesion{
+    font-family: Verdana, Geneva, Tahoma, sans-serifs;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+@media only screen and (max-width:600px) {
+    #primer-contenedor #contenedor-logo a{
+        font-size: 20px;
+    }
+
+    #titulo-admin{
+        font-size: 30px;
+    }
+}
+

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contactanos, Producto, Suscripcion
+from .models import Contactanos, Producto, Suscripcion, Envio
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .validators import MaxSizeFileValidator
@@ -49,3 +49,15 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', "email", "password1", "password2"]
+    
+class EnvioForm(forms.ModelForm):
+
+    class Meta:
+        model = Envio
+        fields = ["nombreCli","apellidoCli","correoCli","telefonoCli"]
+
+class EnvioForm1(forms.ModelForm):
+
+    class Meta:
+        model = Envio
+        fields = ["nombreCli","apellidoCli","correoCli","telefonoCli","SeguimientoCli"]

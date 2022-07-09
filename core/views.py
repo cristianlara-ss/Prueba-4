@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Producto, Marca, Suscripcion, Membresia
-from .forms import ContactoForm, ProductoForm, CustomUserCreationForm, SuscripcionForm
+from .models import Producto, Marca, Suscripcion, Membresia, Envio
+from .forms import ContactoForm, ProductoForm, CustomUserCreationForm, SuscripcionForm, EnvioForm, EnvioForm1
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -195,3 +195,72 @@ def eliminar_membresia(request, id):
     suscripcion.delete()
     messages.success(request, "Membresia Eliminada  Correctamente")
     return redirect(to = "listar_membresia")
+
+@login_required
+def agregar_envio(request):
+    data= {
+        'form' : EnvioForm()
+    }
+    if request.method == 'POST':
+        formulario = EnvioForm(data=request.POST,files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Compra realizada")
+            return redirect(to = "index")
+        else:
+            data["form"] = formulario
+
+    return render(request, 'envio/agregar.html',data)
+
+
+def listar_envio(request):
+    envio = Envio.objects.all()
+    page = request.GET.get('page', 1)
+
+    try:
+        paginator = Paginator(envio, 5)
+        envio = paginator.page(page)
+    except:
+        raise Http404
+
+    data = {
+        'entity': envio,
+        'paginator': paginator
+    }
+    return render(request, 'envio/listar.html',data)
+
+
+@login_required
+def listar_envio_usuario(request):
+    envio = Envio.objects.all()
+    page = request.GET.get('page', 1)
+
+    try:
+        paginator = Paginator(envio, 5)
+        envio = paginator.page(page)
+    except:
+        raise Http404
+
+    data = {
+        'entity': envio,
+        'paginator': paginator
+    }
+    return render(request, 'core/historial.html',data)
+
+
+@login_required
+def modificar_envio(request ,  id):
+    envio = get_object_or_404(Envio, id = id)
+    data = {
+        'form': EnvioForm1(instance=envio)
+    }
+
+    if request.method == 'POST':
+        formulario = EnvioForm1(data=request.POST, instance=envio, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Modificado Correctamente")
+            return redirect(to="listar_envio")
+        data["form"]=formulario
+
+    return render(request, 'envio/modificar.html',data)

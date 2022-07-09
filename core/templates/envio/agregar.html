@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+<br>
+<section>
+    <div class="container">
+        <div class="formulario">
+            <div class="card" style="margin-left: 15%;margin-right:15% ;">
+                <h1 id="titulo" style="padding: 3%; color: rgb(0, 0, 0);" >Datos de envío</h1>
+                <hr style="color: black;">
+                <div class="card-body">
+                    <form  class="formulario" id="despacho" action="" method="post" enctype="multipart/form-data" style="text-align: left;margin-left: 15%;margin-right:15% ;">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <br>
+                        <select id="regiones" class="form-select">
+                            <option active>Seleccione Region</option>
+                        </select>
+                        <br>
+                        <select id="provincia" class="form-select">
+                            <option active>Seleccione Provincia</option>
+                        </select>
+                        <br>
+                        <select id="comunas" class="form-select">
+                            <option active>Seleccione Comuna</option>
+                        </select>
+                        <br>
+                        <div class="d-flex justify-content-end">
+                            <input type="reset" value="Cancelar" class="btn btn-secondary">
+                            &nbsp;
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                    {{mensaje}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+<script>
+    $.get("https://apis.digital.gob.cl/dpa/regiones", function (data) {
+        $.each(data, function (i, data) {
+            $("#regiones").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
+        });
+    });
+
+    $("#regiones").change(function () {
+        $()
+        $("#provincia").empty();
+        $.get("https://apis.digital.gob.cl/dpa/regiones/" + $("#regiones").val() + "/provincias", function (data) {
+            $.each(data, function (i, data) {
+                $("#provincia").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
+            });
+        });
+    });
+
+    $("#provincia").change(function () {
+        $("#comunas").empty();
+        $.get("https://apis.digital.gob.cl/dpa/provincias/" + $("#provincia").val() + "/comunas", function (data) {
+            $.each(data, function (i, data) {
+                $("#comunas").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
+            });
+        });
+    });
+</script>
+
+{% endblock %}

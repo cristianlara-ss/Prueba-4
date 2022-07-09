@@ -50,3 +50,21 @@ class Contactanos(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+class Seguimiento(models.Model):
+    nombre = models.CharField(max_length=50, verbose_name="Seguimiento del Envio")
+
+    def __str__(self):
+        return self.nombre
+
+class Envio(models.Model):
+    nombreCli = models.CharField(max_length=50)
+    apellidoCli = models.CharField(max_length=50)
+    correoCli = models.EmailField()
+    telefonoCli = models.IntegerField()
+    SeguimientoCli = models.ForeignKey(Seguimiento,null=True,blank=True, on_delete=models.CASCADE)
+
+
+    def __str__(self):  
+        return self.nombreCli

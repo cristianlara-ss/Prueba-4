@@ -2,214 +2,77 @@
 
 {% load static %}
 
-{% block js %}
-
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-{% endblock %}
 
 {% block contenido %}
 
 
+<br>
+<br>
 <section class="h-100 gradient-custom">
-    <div class="container py-5">
-    <div class="row d-flex justify-content-center my-4">
-        <div class="col-md-8">
-            <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h5 class="mb-0">Carrito de compras - 1 item</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                            <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                                <img src="{% static 'core/img/acc1.jpg' %}" class="w-100" alt="Blue Jeans Jacket" />
-                                <a href="#!">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                            <p><strong>Correa para perro</strong></p>
-                            <p>Color: Rojo</p>
-                            <p>Talla: M</p>
-                            <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item">
-                                <i class="fas fa-trash">Borrar</i>
-                            </button>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                            <div class="d-flex mb-4" style="max-width: 300px">
-                                <button class="btn btn-primary px-3 me-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                    <i class="fas fa-minus">-</i>
-                                </button>
-                                <div class="form-outline">
-                                    <input id="cont" min="0" name="quantity" value="1" type="number" class="form-control" />
-                                    <label class="form-label" for="form1">Cantidad</label>
-                                </div>
-                                <button class="btn btn-primary px-3 ms-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                    <i class="fas fa-plus">+</i>
-                                </button>
-                            </div>
-                            <p class="text-start text-md-center">
-                                <strong>$2.500</strong>
-                            </p>
-                        </div>
-                    </div>
-                    <hr class="my-4" />
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-body">
-                    <p><strong>Fecha de despacho</strong></p>
-                    <p class="mb-0">12.04.2022 - 14.04.2022</p>
-                </div>
-            </div>
-            <div class="card mb-4 mb-lg-0">
-                <div class="card-body">
-                    <p><strong>Aceptamos</strong></p>
-                    <img class="me-2" width="45px"
-                        src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                        alt="Visa" />
-                    <img class="me-2" width="45px"
-                        src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                        alt="American Express" />
-                    <img class="me-2" width="45px"
-                        src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                        alt="Mastercard" />
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h5 class="mb-0">Total</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                        Productos
-                        <span>$2.500</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                        Envío
-                        <span>Gratis</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                        <div>
-                            <strong>Precio total</strong>
-                            <strong>
-                                <p class="mb-0">(IVA incluido)</p>
-                            </strong>
-                        </div>
-                        <span><strong>$2.500</strong></span>
-                        </li>
-                    </ul>
-                    <button type="button" class="btn btn-primary btn-lg btn-block">
-                        Ir a pagar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
+    <h1 class="text-center">Tu carro de Compras</h1>
     <div class="container">
-        <!-- FORMULARIO -->
-        <form class="filter row g-3" id="formulario">
-            <!-- Grupo Nombres-->
-              <div class="formulario__grupo col-md-6">
-                <label for="nombres" class="form-label text-dark">Nombres</label>
-                <div class="formulario__grupo-input">
-                  <input type="text" class="formulario__input form-control" name="nombres" id="nombres">
-                </div>
-              </div>
+        <table class="table table-striped-columns text-uppercase container py-5 table table-bordered text-white text-center">
+            <thead>
+                <tr>
+                    <th colspan="3" class="text-center">
+                        Carro de Compras
+                    </th>
+                </tr>
+                <tr style="color: rgb(0, 0, 0)  ;">
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Suma</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if request.session.carro.items %}
+                {% for key, value in request.session.carro.items %}
+                <tr>
+                    <td style="color: rgb(0, 0, 0)  ;">{{value.nombre}}</td>
+                    <td style="color: rgb(0, 0, 0)  ;">{{value.cantidad}}</td>
+                    <td class="align-item-center">
+                        <a href="{% url 'carro:agregar' value.producto_id %}"
+                            class="btn btn-sm btn-success ">+</a>
+                        <div style="color: rgb(0, 0, 0)  ;">
+                            ${{value.precio}}
+                        </div>
+                        <a href="{% url 'carro:restar' value.producto_id  %}"
+                            class="btn btn-sm btn-success ">-</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        <div class="alert alert-danger">
+                            Sin productos
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        Total: ${{importe_total_carro}}
+                        <a class="btn btn-primary" {% if user.is_authenticated %} href="{% url 'agregar_envio' %}" {% else %} href="{% url 'login' %}" {% endif %}>Comprar</a>
+                    </td>
+                </tr>
 
-              <!-- Grupo Apellidos-->
-              <div class="formulario__grupo col-md-6">
-                <label for="apellidos" class="form-label text-dark">Apellidos</label>
-                <div class="formulario__grupo-input">
-                  <input type="text" class="formulario__input form-control" name="apellidos" id="apellidos">
-                </div>
-              </div>
-
-              <!-- Grupo Correo-->
-              <div class="formulario__grupo col-md-7">
-                <label for="correo" class="form-label text-dark">Correo</label>
-                <div class="formulario__grupo-input">
-                  <input type="email" class="form-control" name="correo" id="correo" placeholder="@">
-                </div>
-              </div>
-
-              <!-- Grupo Numero-->
-              <div class="formulario__grupo col-md-5">
-                <label for="numero" class="form-label text-dark">Numero</label>
-                <div class="formulario__grupo-input">
-                  <input type="number" class="form-control" name="numero" id="numero" placeholder="(+56)">
-                </div>
-              </div>
-
-              <!-- Grupo Region-->
-              <div class="formulario__grupo col-md-4">
-                <label for="Region" class="form-label text-dark">Region</label>
-                <select id="regiones" class="form-select">
-                  <option active>Seleccione región</option>
-                </select>
-              </div>
-
-              <!-- Grupo Provincia-->
-              <div class="formulario__grupo col-md-4">
-                <label for="Provincia" class="form-label text-dark">Provincia</label>
-                <select id="provincia" class="form-select"></select>
-              </div>
-
-              <!-- Grupo Comuna-->
-              <div class="formulario__grupo col-md-4">
-                <label for="Comuna" class="form-label text-dark">Comuna</label>
-                <select id="comunas" class="form-select"></select>
-              </div>
-
-              <!-- Grupo Botón-->
-              <div class="formulario__grupo col-12">
-                <button type="button" onclick="validar()" class="formulario__btn btn btn-none" style="background-color: rgb(118, 11, 136); color: aliceblue;">Enviar</button>
-                <p></p>
-              </div>
-            </form>
-
-
-        
+            </tfoot>
+        </table>
     </div>
+
+    
 <br>
 </section>
 
-<!-- script api de regiones de chile -->
-<script>
-    $.get("https://apis.digital.gob.cl/dpa/regiones", function (data) {
-        $.each(data, function (i, data) {
-            $("#regiones").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
-        });
-    });
 
-    $("#regiones").change(function () {
-        $()
-        $("#provincia").empty();
-        $.get("https://apis.digital.gob.cl/dpa/regiones/" + $("#regiones").val() + "/provincias", function (data) {
-            $.each(data, function (i, data) {
-                $("#provincia").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
-            });
-        });
-    });
+<br>
+<br>
+<br>    
 
-    $("#provincia").change(function () {
-        $("#comunas").empty();
-        $.get("https://apis.digital.gob.cl/dpa/provincias/" + $("#provincia").val() + "/comunas", function (data) {
-            $.each(data, function (i, data) {
-                $("#comunas").append("<option value='" + data.codigo + "'>" + data.nombre + "</option>");
-            });
-        });
-    });
-</script>
-<!-- fin script api regiones de chile -->
-
-
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 {% endblock %}
